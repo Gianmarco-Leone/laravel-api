@@ -1,0 +1,57 @@
+@import "~bootstrap/scss/bootstrap";
+@import "./partials/_header";
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.btn-icon {
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+.circle-color-preview {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+}
+
+main {
+    section {
+        table {
+            th {
+                font-size: 0.9rem;
+            }
+
+            td {
+                vertical-align: middle;
+                font-size: 0.8rem;
+            }
+
+            i,
+            .btn-icon {
+                font-size: 1rem;
+            }
+        }
+
+        input[type="color"] {
+            width: 3rem;
+        }
+
+        ul {
+            list-style: none;
+
+            li {
+                display: inline-block;
+            }
+        }
+    }
+}

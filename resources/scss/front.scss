@@ -1,0 +1,35 @@
+@import "~bootstrap/scss/bootstrap";
+@import "./partials/_header";
+
+main {
+    background-color: #ddd;
+    height: calc(100vh - 75px);
+
+    .container {
+        overflow-x: auto;
+
+        .card {
+            min-height: 500px;
+
+            .card-top {
+                min-height: 300px;
+                display: flex;
+                align-items: center;
+            }
+
+            .card-body {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+            }
+        }
+
+        figure {
+            text-align: center;
+            img {
+                max-width: 300px;
+                object-fit: cover;
+            }
+        }
+    }
+}
