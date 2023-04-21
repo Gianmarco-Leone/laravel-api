@@ -21,7 +21,7 @@ class ProjectController extends Controller
     {
         $projects = Project::where('is_published', true)
         ->with('type', 'technologies') // Eager Loading per passarmi tramite API anche le tabelle types e technologies
-        ->get();
+        ->paginate(4);
 
         // Controllando tutti i progetti, invoco il getter dell'image scritto nel Model Project
         foreach($projects as $project) {
