@@ -23,6 +23,11 @@ class ProjectController extends Controller
         ->with('type', 'technologies') // Eager Loading per passarmi tramite API anche le tabelle types e technologies
         ->get();
 
+        // Controllando tutti i progetti, invoco il getter dell'image scritto nel Model Project
+        foreach($projects as $project) {
+            if($project->image) $project->image = $project->getImageUri();
+        }
+
         return response()->json($projects);
     }
 
