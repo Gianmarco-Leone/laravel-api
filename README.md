@@ -30,6 +30,65 @@ Iniziamo con il definire il layout, `Model`, `Migration`, `Controller` e `Route`
 9.  Aggiunta della `softDelete()` per avere un cestino dove sprojectare i record alla prima eliminazione. Dal cestino è poi possibile reinserire gli elementi nel DB o eliminarli definitivamente
     ![Screenshot](./public/img/Screenshot_trash.png)
 
+#### API
+
+##### Controller
+
+Creiamo `ProjectController` per la gestione delle api, per farlo da terminale useremo il comando
+
+```php
+php artisan make:controller Api/ProjectController --api
+```
+
+Specificando `Api/` prima del nome del controller, andremo a creare una cartella Api nel quale inserirlo.
+Specificando `--api` dopo il comando di creazione, creeremo direttamente un Controller specifico per le Api, quindi con dei metodi precompilati al suo interno.
+
+###### Controller - API index
+
+Nel metodo index andrò a gestire la logica e i dati passati dall'API.
+
+```php
+// App\Http\Controllers\Api\ProjectController;
+
+public function index()
+{
+    $projects = Project::where('is_published', true)
+
+     // Eager Loading per passarmi tramite API anche le tabelle types e technologies
+    ->with('type', 'technologies')
+
+    ->get();
+
+    // Controllando tutti i progetti, invoco il getter dell'image scritto nel Model Project
+    foreach($projects as $project) {
+        if($project->image) $project->image = $project->getImageUri();
+    }
+
+    return response()->json($projects);
+}
+
+```
+
+Passerò all'applicazione Vue, nel mio caso, solo i `Projects` con la spunta `is_published`; controllerò poi l'immagine se presente nel DB e aggiungerò l'_Eager Loading_ grazie al quale è possibile passare anche gli elementi delle altre tabelle con relazioni esistenti.
+
+Nella query al posto del `->get()` è possibile ricevere i risultati anche con il `->paginate(n)`, stando però attento al modo in cui arrivano in questo caso i risultati delle api.
+
+##### Rotte
+
+Con il comando `Route::apiResource`
+
+```php
+// api.php
+
+Route::apiResource('projects', ProjectController::class);
+```
+
+(ricordandoci di importare l' Api/Controller), andremo a generare direttamente tutte le rotte disponibili per le Api, come ad esempio
+_http://127.0.0.1:8000/api/projects_.
+Testiamo direttamente su postman il risultato della chiamata.
+
+---
+
 ### Guest
 
 1.  Visualizzazione progetti lato client.
