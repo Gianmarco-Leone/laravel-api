@@ -55,6 +55,8 @@ class ProjectController extends Controller
         // Query per il progetto facendo un JOIN anche delle table types e technologies
         $project = Project::where('slug', $slug)->with('type', 'technologies')->first();
 
+        if($project->image) $project->image = $project->getImageUri();
+
         // SE non si trovano risultati crea un errore 404
         if (!$project) return response(null, 404);
 
