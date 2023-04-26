@@ -73,6 +73,29 @@ Passerò all'applicazione Vue, nel mio caso, solo i `Projects` con la spunta `is
 
 Nella query al posto del `->get()` è possibile ricevere i risultati anche con il `->paginate(n)`, stando però attento al modo in cui arrivano in questo caso i risultati delle api.
 
+###### Controller - API show
+
+Andiamo a gestire i dati del dettaglio passati dall'API.
+
+```php
+// App\Http\Controllers\Api\ProjectController;
+
+public function show($slug)
+{
+    // Query per il progetto facendo un JOIN anche delle table types e technologies
+    $project = Project::where('slug', $slug)->with('type', 'technologies')->first();
+
+    // SE non si trovano risultati crea un errore 404
+    if (!$project) return response(null, 404);
+
+    // Infine ritorna il progetto
+    return response()->json($project);
+}
+```
+
+Come parametro della function show passeremo lo `slug` così da avere nel front-end un url più comprensibile per l'utente finale.
+Controlleremo anche la possibilità con cui non ci siano risultati, ritornando una pagina con errore 404
+
 ##### Rotte
 
 Con il comando `Route::apiResource`
