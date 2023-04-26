@@ -50,10 +50,10 @@ class ProjectController extends Controller
      */
 
     // Funzione per ritornare il dettaglio del singolo oggetto passando lo Slug (che ho precedentemento reso unico) come parametro  
-    public function show($id)
+    public function show($slug)
     {
         // Query per il progetto facendo un JOIN anche delle table types e technologies
-        $project = Project::where('id', $id)->with('type', 'technologies')->first();
+        $project = Project::where('slug', $slug)->with('type', 'technologies')->first();
 
         // SE non si trovano risultati crea un errore 404
         if (!$project) return response(null, 404);
