@@ -48,9 +48,18 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    // Funzione per ritornare il dettaglio del singolo oggetto passando lo Slug (che ho precedentemento reso unico) come parametro  
     public function show($id)
     {
-        //
+        // Query per il progetto facendo un JOIN anche delle table types e technologies
+        $project = Project::where('id', $id)->with('type', 'technologies')->first();
+
+        // SE non si trovano risultati crea un errore 404
+        if (!$project) return response(null, 404);
+
+        // Infine ritorna il progetto
+        return response()->json($project);
     }
 
     /**
