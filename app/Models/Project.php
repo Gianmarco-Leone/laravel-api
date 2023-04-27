@@ -35,7 +35,7 @@ class Project extends Model
 
     // Creo un getter per avere sempre o il percorso dell'immagine caricata come file o il path assoluto di un'immagine di placeholder
     public function getImageUri() {
-        return $this->image ? asset('storage/' . $this->image) : 'https://www.grouphealth.ca/wp-content/uploads/2018/05/placeholder-image.png';
+        return $this->image ? url('storage/' . $this->image) : 'https://www.grouphealth.ca/wp-content/uploads/2018/05/placeholder-image.png';
     }
 
     // * MUTATORS

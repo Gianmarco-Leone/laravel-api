@@ -25,7 +25,7 @@ class ProjectController extends Controller
 
         // Controllando tutti i progetti, invoco il getter dell'image scritto nel Model Project
         foreach($projects as $project) {
-            if($project->image) $project->image = $project->getImageUri();
+            $project->image = $project->getImageUri();
         }
 
         return response()->json($projects);
@@ -55,7 +55,7 @@ class ProjectController extends Controller
         // Query per il progetto facendo un JOIN anche delle table types e technologies
         $project = Project::where('slug', $slug)->with('type', 'technologies')->first();
 
-        if($project->image) $project->image = $project->getImageUri();
+        $project->image = $project->getImageUri();
 
         // SE non si trovano risultati crea un errore 404
         if (!$project) return response(null, 404);
