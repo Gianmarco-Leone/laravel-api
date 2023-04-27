@@ -30,7 +30,7 @@ class ProjectController extends Controller
             $project->image = $project->getImageUri();
         }
 
-        return response()->json($projects);
+        return response()->json(compact('projects'));
     }
 
     /**
@@ -62,7 +62,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    // Funzione per ritornare solo i Progetti con la spunta pubblicati così da poterli stampare in un'app Vue
+    // Funzione per ritornare solo i Progetti con la spunta pubblicati in funzione del type_id, così da poterli stampare in un'app Vue
     public function getProjectsByType($type_id)
     {
         $projects = Project::where('type_id', $type_id)
