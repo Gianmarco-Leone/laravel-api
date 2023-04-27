@@ -21,4 +21,5 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // * ProjectController
-Route::apiResource('projects', ProjectController::class);
+Route::apiResource('projects', ProjectController::class)->except('store', 'update', 'destroy');
+Route::get('/type/{type_id}/projects', [ProjectController::class, 'getProjectsByType']);

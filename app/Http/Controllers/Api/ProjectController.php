@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 
 use App\Models\Project;
+use App\Models\Type;
 
 use Illuminate\Http\Request;
 
@@ -33,17 +34,6 @@ class ProjectController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -66,25 +56,29 @@ class ProjectController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Display a listing of project with a type_id.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $type_id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    // Funzione per ritornare solo i Progetti con la spunta pubblicati così da poterli stampare in un'app Vue
+    public function getProjectsByType($type_id)
     {
-        //
+        $projects = Project::where('type_id', $type_id)
+                            ->where('is_published', true)
+                            ->with('type', 'technologies')
+                            ->orderBy('updated_at', 'DESC')
+                            ->paginate(4);
+
+        $type = Type::find($type_id);
+
+
+        // Controllando tutti i progetti, invoco il getter dell'image scritto nel Model Project
+        foreach($projects as $project) {
+            $project->image = $project->getImageUri();
+        }
+
+        return response()->json(compact('projects', 'type'));
     }
 }
