@@ -81,8 +81,11 @@ class ProjectController extends Controller
 
         if(Arr::exists($data, 'technologies')) $project->technologies()->attach($data['technologies']);
 
-        // Create and send EMAIL
-        $this->sendPublishedEmail($project);
+        // SE il progetto è stato pubblicato
+        if($project->is_published) {
+            // Crea e invia email
+            $this->sendPublishedEmail($project);
+        };
 
         return to_route('admin.projects.show', $project)
             ->with('message_content', 'Nuovo progetto aggiunto con successo');
@@ -129,6 +132,8 @@ class ProjectController extends Controller
         // Invoco metodo personalizzato che effettua validazioni
         $data = $this->validation($request->all());
 
+        $start_status = $project->is_published;
+
         // * Metodo della classe Arr di Laravel per cercare un elemento per la chiave all'interno di un array
         if(Arr::exists($data, 'image')) {
 
@@ -144,6 +149,12 @@ class ProjectController extends Controller
         $project->slug = Project::generateSlug($project->title);
         $project->is_published = $request->has('is_published') ? 1 : 0;
         $project->save();
+
+        // SE lo stato 'pubblicato' è diverso da quello di partenza
+        if($start_status != $project->is_published) {
+            // Crea e invia email
+            $this->sendPublishedEmail($project);
+        }
 
         if(Arr::exists($data, 'technologies'))
             $project->technologies()->sync($data['technologies']);
