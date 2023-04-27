@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 
+use App\Mail\PublishedProjectMail;
+
 use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
@@ -11,6 +13,8 @@ use App\Models\Type;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -76,6 +80,12 @@ class ProjectController extends Controller
         $project->save();
 
         if(Arr::exists($data, 'technologies')) $project->technologies()->attach($data['technologies']);
+
+        // EMAIL
+        $mail = new PublishedProjectMail();
+        $user_email = Auth::user()->email;
+        Mail::to($user_email)->send($mail);
+
 
         return to_route('admin.projects.show', $project)
             ->with('message_content', 'Nuovo progetto aggiunto con successo');
