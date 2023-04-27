@@ -43,7 +43,7 @@ class PublishedProjectMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'mails.projects.published',
+            markdown: 'mails.projects.published',
         );
     }
 

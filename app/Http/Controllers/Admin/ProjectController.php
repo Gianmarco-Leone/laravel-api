@@ -81,11 +81,8 @@ class ProjectController extends Controller
 
         if(Arr::exists($data, 'technologies')) $project->technologies()->attach($data['technologies']);
 
-        // EMAIL
-        $mail = new PublishedProjectMail();
-        $user_email = Auth::user()->email;
-        Mail::to($user_email)->send($mail);
-
+        // Create and send EMAIL
+        $this->sendPublishedEmail();
 
         return to_route('admin.projects.show', $project)
             ->with('message_content', 'Nuovo progetto aggiunto con successo');
@@ -255,5 +252,12 @@ class ProjectController extends Controller
             'technologies.exists' => 'Le tecnologie selezionate non sono valide'
             ],
         )->validate();
+    }
+
+    // * Funzione che istanzia nuova email e invia nuova email
+    private function sendPublishedEmail() {
+        $mail = new PublishedProjectMail();
+        $user_email = Auth::user()->email;
+        Mail::to($user_email)->send($mail);
     }
 }

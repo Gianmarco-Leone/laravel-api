@@ -1,1 +1,3 @@
-<h1>Ciao</h1>
+<x-mail::message>
+# Test
+</x-mail::message>
