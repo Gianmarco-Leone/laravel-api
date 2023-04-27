@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -41,11 +43,18 @@ class Project extends Model
     // * MUTATORS
 
     protected function getCreatedAtAttribute($value) {
-        return date('d/m/Y H:i', strtotime($value));
+        // return date('d/m/Y H:i', strtotime($value));
+        Carbon::setLocale('it');
+        $date_from = Carbon::create($value);
+        $date_now = Carbon::now();
+        return str_replace('prima', 'fa', $date_from->diffForHumans($date_now));
     }
 
     protected function getUpdatedAtAttribute($value) {
-        return date('d/m/Y H:i', strtotime($value));
+        // return date('d/m/Y H:i', strtotime($value));
+        $date_from = Carbon::create($value);
+        $date_now = Carbon::now();
+        return str_replace('prima', 'fa', $date_from->diffForHumans($date_now));
     }
 
     // * GENERAL
