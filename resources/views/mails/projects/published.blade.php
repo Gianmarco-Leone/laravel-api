@@ -6,7 +6,7 @@
 {{$project->description}}
 
 @if($project->is_published)
-<x-mail::button url=''>
+<x-mail::button :url="env('APP_FRONTEND_URL') . '/projects/' . $project->slug">
     Vai al progetto
 </x-mail::button>
 @endif
