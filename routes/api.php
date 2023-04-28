@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\ProjectController;
 
 use Illuminate\Http\Request;
@@ -23,3 +24,6 @@ use Illuminate\Support\Facades\Route;
 // * ProjectController
 Route::apiResource('projects', ProjectController::class)->except('store', 'update', 'destroy');
 Route::get('/type/{type_id}/projects', [ProjectController::class, 'getProjectsByType']);
+
+// * MessageController
+Route::post('messages', [MessageController::class, 'store']);
