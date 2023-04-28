@@ -31,6 +31,9 @@
                     <li class="nav-item">
                         <a class="nav-link {{request()->routeIs('admin.technologies*') ? 'active' : ''}}" href="{{route('admin.technologies.index') }}">{{ __('Tecnologie') }}</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{request()->routeIs('admin.messages*') ? 'active' : ''}}" href="{{route('admin.messages.index') }}">{{ __('Messaggi') }}</a>
+                    </li>
                 </ul>
             @endauth
 

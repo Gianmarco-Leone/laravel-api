@@ -7,6 +7,7 @@ use App\Http\Controllers\Guest\HomeController as GuestHomeController;
 
 // * Admin
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\TechnologyController;
 use App\Http\Controllers\Admin\TypeController;
@@ -50,6 +51,9 @@ Route::middleware('auth')
 
         // * Risorsa Technology
         Route::resource('technologies', TechnologyController::class)->except(['show']);
+
+        // * Risorsa Message
+        Route::resource('messages', MessageController::class)->except(['create', 'store', 'edit','update', 'destroy']);
     });
 
 // * Rotte profilo
