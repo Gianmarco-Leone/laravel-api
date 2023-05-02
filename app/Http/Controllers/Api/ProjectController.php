@@ -23,7 +23,7 @@ class ProjectController extends Controller
         $projects = Project::where('is_published', true)
         ->with('type', 'technologies') // Eager Loading per passarmi tramite API anche le tabelle types e technologies
         ->orderBy('updated_at', 'DESC')
-        ->paginate(4);
+        ->paginate(3);
 
         // Controllando tutti i progetti, invoco il getter dell'image scritto nel Model Project
         foreach($projects as $project) {
@@ -69,7 +69,7 @@ class ProjectController extends Controller
                             ->where('is_published', true)
                             ->with('type', 'technologies')
                             ->orderBy('updated_at', 'DESC')
-                            ->paginate(4);
+                            ->paginate(3);
 
         $type = Type::find($type_id);
 
