@@ -19,9 +19,15 @@
         <a href="{{route('admin.projects.index')}}" class="btn btn-primary">
             Torna alla lista
         </a>
+
+        @if (session('message_content'))
+        <div class="alert alert-{{session('message_type') ? session('message_type') : 'success'}} mt-4">
+            {{session('message_content')}}
+        </div>
+        @endif
     </div>
 
-    <div class="card my-5">
+    <div class="card my-5 p-3">
         <div class="card-body">
 
             @if ($project->id)
@@ -104,8 +110,13 @@
                         @enderror
                     </div>
 
-                    <div class="col-4 border p-2">
+                    <div class="col-4 border p-2 position-relative">
                         <img src="{{$project->getImageUri()}}" alt="{{$project->title}}" class="img-fluid" id="image_preview">
+                        @if($project->image)
+                        <span id="button-delete-project-image" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            X
+                        </span>
+                        @endif
                     </div>
 
                     <div class="col-12">
@@ -141,6 +152,15 @@
                     </div>
 
                 </form>
+
+                @if($project->image)
+                {{-- FORM eliminazione image preview --}}
+                <form id="form-delete-project-image" action="{{route('admin.projects.deleteimage', $project)}}" method="POST">
+                    @method('delete')
+                    @csrf
+
+                </form>
+                @endif
         </div>
     </div>
 </section>
@@ -168,5 +188,17 @@
             }
         });
 </script>
+
+@if($project->image)
+<script>
+    const deleteImageButton = document.getElementById('button-delete-project-image');
+    const deleteImageForm = document.getElementById('form-delete-project-image');
+
+    deleteImageButton.addEventListener(
+        'click', () => {
+            deleteImageForm.submit();
+        });
+</script>
+@endif
 
 @endsection

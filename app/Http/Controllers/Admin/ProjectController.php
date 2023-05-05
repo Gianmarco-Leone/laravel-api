@@ -271,4 +271,23 @@ class ProjectController extends Controller
         $user_email = Auth::user()->email;
         Mail::to($user_email)->send($mail);
     }
+
+        /**
+     * Delete the image from storage.
+     *
+     * @param  \App\Models\Shoe  $shoe
+     * @return \Illuminate\Http\Response
+     */
+
+    // * Funzione che elimina l'immagine nel form
+    public function deleteimage(Project $project)
+    {
+        if ($project->image) Storage::delete($project->image);
+
+        $project->image = null;
+        $project->save();
+
+        return redirect()->back()->with('message_content', 'Immagine eliminata con successo!')
+            ->with('message_type', 'danger');
+    }
 }

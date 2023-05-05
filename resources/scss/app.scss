@@ -42,6 +42,15 @@ main {
             }
         }
 
+        #button-delete-project-image {
+            cursor: pointer;
+            opacity: 0.3;
+        }
+
+        .col-4.position-relative:hover #button-delete-project-image {
+            opacity: 1;
+        }
+
         input[type="color"] {
             width: 3rem;
         }

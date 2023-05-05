@@ -41,6 +41,7 @@ Route::middleware('auth')
         Route::get('projects/trash', [ProjectController::class, 'trash'])->name('projects.trash');
         Route::put('projects/{project}/restore', [ProjectController::class, 'restore'])->name('projects.restore');
         Route::delete('projects/{project}/forcedelete', [ProjectController::class, 'forcedelete'])->name('projects.forcedelete');
+        Route::delete('projects/{project}/delete-image', [ProjectController::class, 'deleteimage'])->name('projects.deleteimage');
         
         // * Risorsa Project
         Route::resource('projects', ProjectController::class)
